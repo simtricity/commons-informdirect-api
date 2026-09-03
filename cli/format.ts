@@ -8,8 +8,9 @@ export function formatCompanyTable(companies: CompanySummary[]): void {
   );
   const nameWidth = Math.max(4, ...companies.map((c) => c.Name.length));
 
-  const header =
-    `${"Number".padEnd(numWidth)}  ${"Name".padEnd(nameWidth)}  URL`;
+  const header = `${"Number".padEnd(numWidth)}  ${
+    "Name".padEnd(nameWidth)
+  }  URL`;
   console.log(header);
   console.log("-".repeat(header.length));
 

@@ -7,7 +7,7 @@
  *   deno task cli <command> [options]
  *
  * Commands:
- *   authenticate                    Test authentication
+ *   whoami                          Prove live access (authenticate + read portfolio)
  *   list-companies                  List all companies in portfolio
  *   get-company -c <number>         Get a single company
  *   add-company -c <number> [-a <code>]  Add a company
@@ -17,6 +17,8 @@
  *   -c, --company        Company number
  *   -a, --auth-code      Authentication code (for add-company)
  *       --sandbox        Use sandbox environment (default: production)
+      --json           Machine-readable output
+ *       --json           Machine-readable output (one JSON document on stdout)
  *       --save-registers Save registers on removal
  *       --save-documents Save documents on removal
  *   -h, --help           Show this help
@@ -29,7 +31,7 @@ import * as commands from "./commands.ts";
 
 const args = parseArgs(Deno.args, {
   string: ["company", "auth-code"],
-  boolean: ["help", "save-registers", "save-documents", "sandbox"],
+  boolean: ["help", "save-registers", "save-documents", "sandbox", "json"],
   alias: { h: "help", c: "company", a: "auth-code" },
 });
 
@@ -41,7 +43,7 @@ function printUsage(): void {
 Usage: deno task cli <command> [options]
 
 Commands:
-  authenticate                         Test authentication
+  whoami                               Prove live access (exit 1 on failure)
   list-companies                       List all companies
   get-company    -c <number>           Get a single company
   add-company    -c <number> [-a code] Add a company
@@ -51,6 +53,7 @@ Options:
   -c, --company        Company number
   -a, --auth-code      Authentication code
       --sandbox        Use sandbox environment (default: production)
+      --json           Machine-readable output
       --save-registers Save registers on removal
       --save-documents Save documents on removal
   -h, --help           Show this help`);
@@ -72,26 +75,34 @@ if (!apiKey) {
 }
 
 const baseUrl = sandbox ? BASE_URLS.sandbox : BASE_URLS.production;
-console.log(`[${sandbox ? "SANDBOX" : "PRODUCTION"}] ${baseUrl}\n`);
+const out: commands.OutputOptions = {
+  json: Boolean(args.json),
+  environment: sandbox ? "sandbox" : "production",
+  baseUrl,
+};
+if (!out.json) {
+  console.log(`[${sandbox ? "SANDBOX" : "PRODUCTION"}] ${baseUrl}\n`);
+}
 
 const client = new InformDirectClient({ apiKey, baseUrl });
 
 try {
   switch (command) {
+    case "whoami":
     case "authenticate":
-      await commands.authenticate(client);
+      await commands.whoami(client, out);
       break;
     case "list-companies":
-      await commands.listCompanies(client);
+      await commands.listCompanies(client, out);
       break;
     case "get-company":
-      await commands.getCompany(client, args.company);
+      await commands.getCompany(client, out, args.company);
       break;
     case "add-company":
-      await commands.addCompany(client, args.company, args["auth-code"]);
+      await commands.addCompany(client, out, args.company, args["auth-code"]);
       break;
     case "remove-company":
-      await commands.removeCompany(client, args.company, {
+      await commands.removeCompany(client, out, args.company, {
         saveRegisters: args["save-registers"],
         saveDocuments: args["save-documents"],
       });
@@ -102,6 +113,8 @@ try {
       Deno.exit(1);
   }
 } catch (error) {
-  console.error(`Error: ${error instanceof Error ? error.message : error}`);
+  const message = error instanceof Error ? error.message : String(error);
+  if (out.json) console.log(JSON.stringify({ ok: false, error: message }));
+  console.error(`Error: ${message}`);
   Deno.exit(1);
 }

@@ -1,21 +1,21 @@
 /**
- * Safe read-only tests — can be run against sandbox or production.
+ * Live read-only tests — can be run against sandbox or production.
  *
  * These tests only authenticate and read data. They never add or remove companies.
  *
  * Uses INFORM_DIRECT_API_KEY (production) by default.
  * Set INFORM_DIRECT_SAFE_TEST_SANDBOX=1 to use sandbox key instead.
  *
- * Run: deno task test
+ * Run: deno task test:live
  */
 
 import "@std/dotenv/load";
 import { assertEquals, assertExists } from "@std/assert";
 import {
-  BASE_URLS,
-  InformDirectClient,
   type AuthTokens,
+  BASE_URLS,
   type CompanySummary,
+  InformDirectClient,
 } from "../lib/mod.ts";
 
 // --- Setup ---

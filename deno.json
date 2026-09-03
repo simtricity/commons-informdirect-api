@@ -1,6 +1,6 @@
 {
   "name": "@simtricity-commons/informdirect-api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "exports": "./mod.ts",
   "publish": {
@@ -15,9 +15,9 @@
     ]
   },
   "tasks": {
-    "check": "deno check mod.ts cli/mod.ts tests/sandbox-test.ts tests/safe-test.ts tests/unit-test.ts examples/read-only.ts examples/raw-fetch.ts",
+    "check": "deno check mod.ts cli/mod.ts tests/sandbox-test.ts tests/live-test.ts tests/unit-test.ts examples/read-only.ts examples/raw-fetch.ts",
     "test": "deno test tests/unit-test.ts",
-    "test:prod": "deno test --allow-net --allow-env --allow-read tests/safe-test.ts",
+    "test:live": "deno test --allow-net --allow-env --allow-read tests/live-test.ts",
     "test:sandbox": "deno test --allow-net --allow-env --allow-read tests/sandbox-test.ts",
     "cli": "deno run --allow-net --allow-env --allow-read cli/mod.ts",
     "publish:dry": "deno publish --dry-run --allow-dirty"

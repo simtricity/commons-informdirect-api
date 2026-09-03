@@ -11,8 +11,8 @@ deno task check              # Type-check all entry points
 deno task cli <command>      # Run CLI — production by default (see deno task cli --help)
 deno task cli --sandbox <command>  # Run CLI against sandbox
 deno task test               # Offline unit tests (no API key needed)
-deno task test:prod          # Read-only tests against production
-deno task test:sandbox       # 4-step sandbox compliance test (adds/removes a company)
+deno task test:live          # Read-only live tests (production key by default)
+deno task test:sandbox       # MUTATING 4-step compliance test, sandbox only (adds/removes a company)
 ```
 
 ## Inform Direct API
@@ -34,7 +34,7 @@ deno task test:sandbox       # 4-step sandbox compliance test (adds/removes a co
 
 ## Environment Variables
 
-- `INFORM_DIRECT_API_KEY` — production API key (used by CLI default and `test:prod`)
+- `INFORM_DIRECT_API_KEY` — production API key (used by CLI default and `test:live`)
 - `INFORM_DIRECT_SANDBOX_API_KEY` — sandbox API key (used by CLI `--sandbox` and `test:sandbox`)
 - `TEST_COMPANY_NUMBER` — optional, defaults to `00014259` for sandbox tests
 - Both keys stored in `.env` (gitignored)

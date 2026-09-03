@@ -1,10 +1,14 @@
 # @simtricity-commons/informdirect-api
 
-A typed Deno client library and CLI for the [Inform Direct](https://www.informdirect.co.uk/) Integration API — the UK company secretarial platform.
+A typed Deno client library and CLI for the
+[Inform Direct](https://www.informdirect.co.uk/) Integration API — the UK
+company secretarial platform.
 
-> Unofficial. Not affiliated with or endorsed by Inform Direct. © Simtricity Limited, MIT.
+> Unofficial. Not affiliated with or endorsed by Inform Direct. © Simtricity
+> Limited, MIT.
 >
-> Previously published as `@simtricity/informdirect-api` (0.1.0). That package is archived; use this scope.
+> Previously published as `@simtricity/informdirect-api` (0.1.0). That package
+> is archived; use this scope.
 
 ## Features
 
@@ -45,7 +49,10 @@ cp .env.example .env
 ## Library Usage
 
 ```ts
-import { InformDirectClient, BASE_URLS } from "@simtricity-commons/informdirect-api";
+import {
+  BASE_URLS,
+  InformDirectClient,
+} from "@simtricity-commons/informdirect-api";
 
 const client = new InformDirectClient({
   apiKey: "your-api-key",
@@ -75,15 +82,19 @@ const tokens = await client.authenticate();
 await client.logout();
 ```
 
-Authentication is lazy — the first API call triggers it automatically. If a request returns 401, the client refreshes the token (or re-authenticates as a fallback) and retries once.
+Authentication is lazy — the first API call triggers it automatically. If a
+request returns 401, the client refreshes the token (or re-authenticates as a
+fallback) and retries once.
 
 See `examples/` for complete runnable examples:
+
 - `examples/read-only.ts` — library client usage (safe for production)
 - `examples/raw-fetch.ts` — raw fetch without the library
 
 ## CLI Usage
 
-The CLI defaults to **production**. Use `--sandbox` to switch to the sandbox environment.
+The CLI defaults to **production**. Use `--sandbox` to switch to the sandbox
+environment.
 
 Set your API keys in a `.env` file:
 
@@ -95,6 +106,8 @@ INFORM_DIRECT_SANDBOX_API_KEY=your-sandbox-key
 Then run commands via `deno task`:
 
 ```bash
+deno task cli whoami                                  # prove live access; exit 1 on failure
+deno task cli whoami --json                           # {"ok":true,"environment":...,"companyCount":N}
 deno task cli list-companies                          # production
 deno task cli --sandbox list-companies                # sandbox
 deno task cli get-company -c 00014259
@@ -105,48 +118,52 @@ deno task cli --help
 
 ### CLI Options
 
-| Flag | Alias | Description |
-|---|---|---|
-| `--company` | `-c` | Company number (8 digits or prefix + 6 digits) |
-| `--auth-code` | `-a` | Authentication code (for add-company) |
-| `--sandbox` | | Use sandbox environment (default: production) |
-| `--save-registers` | | Save registers on removal |
-| `--save-documents` | | Save documents on removal |
-| `--help` | `-h` | Show help |
+| Flag               | Alias | Description                                                                     |
+| ------------------ | ----- | ------------------------------------------------------------------------------- |
+| `--company`        | `-c`  | Company number (8 digits or prefix + 6 digits)                                  |
+| `--auth-code`      | `-a`  | Authentication code (for add-company)                                           |
+| `--sandbox`        |       | Use sandbox environment (default: production)                                   |
+| `--json`           |       | One JSON document on stdout, nothing else; errors as `{"ok":false,"error":...}` |
+| `--save-registers` |       | Save registers on removal                                                       |
+| `--save-documents` |       | Save documents on removal                                                       |
+| `--help`           | `-h`  | Show help                                                                       |
 
 ## Testing
 
 ```bash
 deno test tests/unit-test.ts    # Offline unit tests (validation, HTTPS enforcement)
-deno task test:prod             # Read-only tests against production
+deno task test:live             # Read-only live tests (production key by default)
 deno task test:sandbox          # Full compliance test against sandbox (adds/removes a company)
 deno task check                 # Type-check all entry points
 ```
 
 ### Sandbox Compliance
 
-Inform Direct requires successful sandbox API calls before granting a production key. The sandbox test runner executes all four required operations:
+Inform Direct requires successful sandbox API calls before granting a production
+key. The sandbox test runner executes all four required operations:
 
 1. **Add company** — `POST /companies/add`
 2. **List companies** — `GET /companies`
 3. **Get company** — `GET /companies/{num}`
 4. **Remove company** — `PUT /companies/delete`
 
-See [INFORMDIRECT_SANDBOX_TESTING.md](./INFORMDIRECT_SANDBOX_TESTING.md) for detailed API documentation and sandbox behaviour notes.
+See [INFORMDIRECT_SANDBOX_TESTING.md](./INFORMDIRECT_SANDBOX_TESTING.md) for
+detailed API documentation and sandbox behaviour notes.
 
 ## API Reference
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/authenticate` | POST | Authenticate with API key |
-| `/refresh` | POST | Refresh access token |
-| `/logout` | POST | Invalidate tokens |
-| `/companies` | GET | List all companies |
-| `/companies/{num}` | GET | Get single company |
-| `/companies/add` | POST | Add a company |
-| `/companies/delete` | PUT | Remove a company |
+| Endpoint            | Method | Description               |
+| ------------------- | ------ | ------------------------- |
+| `/authenticate`     | POST   | Authenticate with API key |
+| `/refresh`          | POST   | Refresh access token      |
+| `/logout`           | POST   | Invalidate tokens         |
+| `/companies`        | GET    | List all companies        |
+| `/companies/{num}`  | GET    | Get single company        |
+| `/companies/add`    | POST   | Add a company             |
+| `/companies/delete` | PUT    | Remove a company          |
 
-All request/response fields use PascalCase. Access tokens are valid for 15 minutes.
+All request/response fields use PascalCase. Access tokens are valid for 15
+minutes.
 
 - Sandbox: `https://sandbox-api.informdirect.co.uk`
 - Production: `https://api.informdirect.co.uk`
