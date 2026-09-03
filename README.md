@@ -9,6 +9,8 @@ company secretarial platform.
 >
 > Previously published as `@simtricity/informdirect-api` (0.1.0). That package
 > is archived; use this scope.
+>
+> [Changelog](https://github.com/simtricity/commons-informdirect-api/blob/main/CHANGELOG.md) · [Issues](https://github.com/simtricity/commons-informdirect-api/issues)
 
 ## Features
 
