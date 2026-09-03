@@ -46,5 +46,6 @@ deno task test:sandbox       # MUTATING 4-step compliance test, sandbox only (ad
 - GitHub Actions workflow at `.github/workflows/publish.yml` triggers on `v*` tags
 - **Do not publish or push version tags without Damon's explicit authorisation**
 - `deno task publish:dry` to validate before publishing
-- Only `lib/`, `mod.ts`, `LICENSE`, and `deno.json` are included in the published package
+- Only `lib/`, `mod.ts`, `LICENSE`, `deno.json`, `deno.lock`, `CHANGELOG.md` are included in the published package
+- Every release gets a `CHANGELOG.md` entry before the tag
 
