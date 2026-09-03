@@ -3,6 +3,11 @@
 All notable changes to `@simtricity-commons/informdirect-api`. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow SemVer.
 
+## [0.1.3] - 2026-09-03
+
+### Added
+- `CHANGELOG.md` published with the package; README links to it and to issues.
+
 ## [0.1.2] - 2026-09-03
 
 ### Added
@@ -30,6 +35,7 @@ All notable changes to `@simtricity-commons/informdirect-api`. Format follows
 - Initial release as `@simtricity/informdirect-api`: typed client with auto-refresh on 401,
   PascalCase wire types, error classes, CLI with `--sandbox`.
 
+[0.1.3]: https://github.com/simtricity/commons-informdirect-api/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/simtricity/commons-informdirect-api/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/simtricity/commons-informdirect-api/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/simtricity/commons-informdirect-api/releases/tag/v0.1.0
