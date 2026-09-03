@@ -3,7 +3,7 @@
  *
  * @example
  * ```ts
- * import { InformDirectClient } from "@simtricity/informdirect-api";
+ * import { InformDirectClient } from "@simtricity-commons/informdirect-api";
  *
  * const client = new InformDirectClient({ apiKey: "your-key" });
  * const companies = await client.getCompanies();

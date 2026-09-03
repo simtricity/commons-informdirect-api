@@ -1,14 +1,8 @@
-# @simtricity/informdirect-api
+# @simtricity-commons/informdirect-api
 
 Typed Deno client library + CLI for the Inform Direct Integration API (UK company secretarial platform).
 
-## Project Structure
-
-- `lib/` — Reusable library (client, types, errors). No env/dotenv deps — safe for webapp import.
-- `cli/` — CLI tool that wraps the library. Loads `.env` and parses args.
-- `tests/` — Unit tests, production-safe tests, and sandbox compliance test runner.
-- `examples/` — Runnable examples (library client + raw fetch).
-- `mod.ts` — Top-level barrel export for the library.
+Lives in the `simt-commons` workspace; follows its `CLAUDE.md` conventions (env-agnostic `lib/`, PascalCase wire types, caret deps, `// fallback:` comments).
 
 ## Key Commands
 
@@ -16,7 +10,7 @@ Typed Deno client library + CLI for the Inform Direct Integration API (UK compan
 deno task check              # Type-check all entry points
 deno task cli <command>      # Run CLI — production by default (see deno task cli --help)
 deno task cli --sandbox <command>  # Run CLI against sandbox
-deno test tests/unit-test.ts # Offline unit tests (no API key needed)
+deno task test               # Offline unit tests (no API key needed)
 deno task test:prod          # Read-only tests against production
 deno task test:sandbox       # 4-step sandbox compliance test (adds/removes a company)
 ```
@@ -47,16 +41,10 @@ deno task test:sandbox       # 4-step sandbox compliance test (adds/removes a co
 
 ## Publishing
 
-- Package: `@simtricity/informdirect-api` on JSR
+- Package: `@simtricity-commons/informdirect-api` on JSR; repo `simtricity/commons-informdirect-api`. `@simtricity/informdirect-api` 0.1.0 is the archived predecessor.
 - License: MIT
 - GitHub Actions workflow at `.github/workflows/publish.yml` triggers on `v*` tags
 - **Do not publish or push version tags without Damon's explicit authorisation**
-- `deno publish --dry-run --allow-dirty` to validate before publishing
+- `deno task publish:dry` to validate before publishing
 - Only `lib/`, `mod.ts`, `LICENSE`, and `deno.json` are included in the published package
 
-## Development Notes
-
-- Follow Simtricity conventions: caret versioning, JSR packages preferred, centralized imports in deno.json
-- The `lib/` layer must stay env-agnostic (no dotenv, no Deno.env) — only CLI and tests load env
-- API types use PascalCase to match the wire format; internal config uses camelCase
-- Comment any fallback mechanisms with `// fallback: {explanation}`

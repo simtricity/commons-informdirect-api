@@ -1,6 +1,10 @@
-# @simtricity/informdirect
+# @simtricity-commons/informdirect-api
 
 A typed Deno client library and CLI for the [Inform Direct](https://www.informdirect.co.uk/) Integration API — the UK company secretarial platform.
+
+> Unofficial. Not affiliated with or endorsed by Inform Direct. © Simtricity Limited, MIT.
+>
+> Previously published as `@simtricity/informdirect-api` (0.1.0). That package is archived; use this scope.
 
 ## Features
 
@@ -16,7 +20,7 @@ A typed Deno client library and CLI for the [Inform Direct](https://www.informdi
 ### As a Deno dependency
 
 ```ts
-import { InformDirectClient } from "jsr:@simtricity/informdirect-api";
+import { InformDirectClient } from "jsr:@simtricity-commons/informdirect-api";
 ```
 
 Or add to your `deno.json`:
@@ -24,7 +28,7 @@ Or add to your `deno.json`:
 ```json
 {
   "imports": {
-    "@simtricity/informdirect-api": "jsr:@simtricity/informdirect-api@^0.1.0"
+    "@simtricity-commons/informdirect-api": "jsr:@simtricity-commons/informdirect-api@^0.1.1"
   }
 }
 ```
@@ -32,7 +36,7 @@ Or add to your `deno.json`:
 ### From source
 
 ```bash
-git clone https://github.com/simtricity/informdirect-api.git
+git clone https://github.com/simtricity/commons-informdirect-api.git
 cd informdirect-api
 cp .env.example .env
 # Edit .env with your API keys
@@ -41,7 +45,7 @@ cp .env.example .env
 ## Library Usage
 
 ```ts
-import { InformDirectClient, BASE_URLS } from "@simtricity/informdirect-api";
+import { InformDirectClient, BASE_URLS } from "@simtricity-commons/informdirect-api";
 
 const client = new InformDirectClient({
   apiKey: "your-api-key",

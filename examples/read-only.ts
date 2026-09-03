@@ -4,7 +4,7 @@
  * Read-only example — safe to run against sandbox or production.
  *
  * Demonstrates authenticating with the Inform Direct API and reading
- * company data using the @simtricity/informdirect-api client library.
+ * company data using the @simtricity-commons/informdirect-api client library.
  *
  * Usage:
  *   deno run --allow-net --allow-env --allow-read examples/read-only.ts
