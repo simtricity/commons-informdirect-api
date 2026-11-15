@@ -44,7 +44,7 @@ deno task test:sandbox       # MUTATING 4-step compliance test, sandbox only (ad
 - Package: `@simtricity-commons/informdirect-api` on JSR; repo `simtricity/commons-informdirect-api`. `@simtricity/informdirect-api` 0.1.0 is the archived predecessor.
 - License: MIT
 - GitHub Actions workflow at `.github/workflows/publish.yml` triggers on `v*` tags
-- **Do not publish or push version tags without Damon's explicit authorisation**
+- **Do not publish or push version tags without the maintainer's explicit authorisation**
 - `deno task publish:dry` to validate before publishing
 - Only `lib/`, `mod.ts`, `LICENSE`, `deno.json`, `deno.lock`, `CHANGELOG.md` are included in the published package
 - Every release gets a `CHANGELOG.md` entry before the tag
